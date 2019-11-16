@@ -4,12 +4,13 @@ import { TreeData } from '../typings'
 
 interface Props {
   data: TreeData,
-  onCollapse: any
+  onCollapse: any,
+  onCheck: any
 }
 
 class TreeNode extends React.Component<Props> {
   render() {
-    let { data: { name, children, key, collapsed } } = this.props
+    let { data: { name, children, key, collapsed, checked }, onCheck } = this.props
     // 箭头
     let caret = null
     // 图标
@@ -20,7 +21,7 @@ class TreeNode extends React.Component<Props> {
         caret = (
           <span
             className={`iconfont ${collapsed ? 'iconpreviewright' : 'icondownarrow'}`}
-            onClick={this.props.onCollapse(key)}>
+            onClick={() => this.props.onCollapse(key)}>
           </span>
         )
         icon = collapsed ? 'iconfolder1' : 'iconfolder'
@@ -31,12 +32,13 @@ class TreeNode extends React.Component<Props> {
       }
     } else {
       // 需要远程加载
-      caret = (
-        <span
-          className="iconfont iconpreviewright"
-          onClick={this.props.onCollapse(key)}>
-        </span>
-      )
+      // caret = (
+      //   <span
+      //     className="iconfont iconpreviewright"
+      //     onClick={() => this.props.onCollapse(key)}>
+      //   </span>
+      // )
+      caret = <span className="iconfont iconFileloading"></span>
       icon = collapsed ? 'iconfolder1' : 'iconfolder'
     }
     return (
@@ -44,16 +46,21 @@ class TreeNode extends React.Component<Props> {
         <div className="inner">
           {caret}
           <span className={`iconfont ${icon}`}>
+            <input
+              type="checkbox"
+              checked={checked}
+              onChange={() => onCheck(key)} />
             {name}
           </span>
           {
-            (children && children.length > 0) && (
+            (children && children.length > 0 && !collapsed) && (
               <div className="children">
                 {
                   children.map((item: TreeData) => (
                     <TreeNode
                       onCollapse={this.props.onCollapse}
                       data={item}
+                      onCheck={onCheck}
                       key={item.key} />
                   ))
                 }
