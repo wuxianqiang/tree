@@ -1,10 +1,30 @@
 .tree {
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  width: 70%;
-  overflow-x: hidden;
-  overflow-y: auto;
+  position        : fixed;
+  top             : 0;
+  left            : 0;
+  bottom          : 0;
+  width           : 70%;
+  overflow-x      : hidden;
+  overflow-y      : auto;
   background-color: #eee;
+
+  .tree-nodes {
+    position: relative;
+    overflow: hidden;
+
+    .tree-node {
+      .inner {
+        color       : #000;
+        font-style  : 20px;
+        position    : relative;
+        cursor      : pointer;
+        padding-left: 10px;
+
+        .content {
+          display: inline-block;
+          width  : 100%;
+        }
+      }
+    }
+  }
 }
