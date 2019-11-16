@@ -43,11 +43,14 @@ class Tree extends React.Component<Props, State> {
       }
     })
   }
+  onCollapse = (key:string) => {
+
+  }
   render() {
     return (
       <div className="tree">
         <div className="tree-nodes">
-          <TreeNode data={this.props.data} />
+          <TreeNode data={this.props.data} onCollapse={this.onCollapse} />
         </div>
       </div>
     );
