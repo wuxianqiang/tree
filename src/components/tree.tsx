@@ -47,10 +47,36 @@ class Tree extends React.Component<Props, State> {
   onCollapse = (key: string): void => {
     let data = this.keyNodeMap[key]
     if (data) {
-      data.collapsed = !data.collapsed
-      data.children = data.children || []
-      this.setState({ data: this.state.data })
-      // this.buildKeyMap()
+      let { children } = data
+      if (children) {
+        data.collapsed = !data.collapsed
+        data.children = data.children || []
+        this.setState({ data: this.state.data })
+        // this.buildKeyMap()
+      } else {
+        // 没有children表示要远程加载
+        setTimeout(() => {
+          data.loading = true
+          data.children = [
+            {
+              name: data.name + '的儿子1',
+              key: `${data.key}-1`,
+              type: 'folder',
+              collapsed: true
+            },
+            {
+              name: data.name + '的儿子2',
+              key: `${data.key}-2`,
+              type: 'folder',
+              collapsed: true
+            }
+          ]
+          data.collapsed = false
+          data.loading = false
+          this.buildKeyMap()
+          this.setState({ data: this.state.data })
+        }, 2000);
+      }
     }
   }
   onCheck = (key: string): void => {
@@ -68,7 +94,7 @@ class Tree extends React.Component<Props, State> {
         this.checkParent(data.parent)
       }
     }
-    this.setState({data: this.state.data})
+    this.setState({ data: this.state.data })
   }
   checkParent = (parent: TreeData): void => {
     while (parent) {

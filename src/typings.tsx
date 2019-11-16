@@ -5,7 +5,8 @@ export interface TreeData {
   collapsed: boolean,
   children?: TreeData[],
   parent?: TreeData,
-  checked?: boolean
+  checked?: boolean,
+  loading?: boolean
 }
 
 // ?:可选属性

@@ -8,9 +8,23 @@ interface Props {
   onCheck: any
 }
 
+
 class TreeNode extends React.Component<Props> {
+  constructor(props: Props) {
+    super(props)
+  }
   render() {
-    let { data: { name, children, key, collapsed, checked }, onCheck } = this.props
+    let {
+      data: {
+        name,
+        children,
+        key,
+        collapsed,
+        checked,
+        loading
+      },
+      onCheck
+    } = this.props
     // 箭头
     let caret = null
     // 图标
@@ -38,7 +52,10 @@ class TreeNode extends React.Component<Props> {
       //     onClick={() => this.props.onCollapse(key)}>
       //   </span>
       // )
-      caret = <span className="iconfont iconFileloading"></span>
+
+      caret = <span
+        className={`iconfont ${loading ? 'icondownarrow' : 'iconFileloading'}`}
+        onClick={() => this.props.onCollapse(key)}></span>
       icon = collapsed ? 'iconfolder1' : 'iconfolder'
     }
     return (
