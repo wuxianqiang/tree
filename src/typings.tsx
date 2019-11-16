@@ -3,7 +3,8 @@ export interface TreeData {
   key: string,
   type: string,
   collapsed: boolean,
-  children?: TreeData[]
+  children?: TreeData[],
+  parent?: TreeData
 }
 
 // ?:可选属性
